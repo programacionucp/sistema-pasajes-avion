@@ -50,7 +50,3 @@ def destroy_window():
 if __name__ == '__main__':
     import TPPasajeros
     TPPasajeros.vp_start_gui()
-
-
-
-
