@@ -5,7 +5,11 @@
 #  in conjunction with Tcl version 8.6
 #    Apr 15, 2020 05:22:22 PM -03  platform: Windows NT
 
+
 import sys
+from tkinter import *
+from tkinter import ttk
+from tkinter import messagebox
 
 try:
     import Tkinter as tk
@@ -19,15 +23,41 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
+
+
 def init(top, gui, *args, **kwargs):
     global w, top_level, root
     w = gui
     top_level = top
     root = top
+    global listaEjecutiva,listaEconomica,listaPasajeros,indEj_ventanilla,indEj_pasillo,indEco_ventanilla,indEco_centro,indEco_pasillo
+    indEco_centro = 0
+    indEco_pasillo = 0
+    indEj_ventanilla = 0
+    indEj_pasillo = 0
+    indEco_ventanilla = 0
+    listaVentana = list()
+    listaPasillos = list()
+    listaCentro = list()
+    listaPasajeros = list()
+    listaEjecutiva = [listaVentana,listaPasillos]
+    listaEconomica = [listaVentana,listaCentro,listaPasillos]
+    listaEjecutiva[0] = [w.asiento_1,w.asiento_4,w.asiento_5,w.asiento_8]
+    listaEjecutiva[1] = [w.asiento_2,w.asiento_3,w.asiento_6,w.asiento_7]
+    listaEconomica[0] = [w.asiento_9,w.asiento_14,w.asiento_20,w.asiento_26,w.asiento_32,w.asiento_38,w.asiento_44,w.asiento_15,w.asiento_21,w.asiento_27,w.asiento_33,w.asiento_39,w.asiento_45,w.asiento_50]
+    listaEconomica[1] = [w.asiento_10,w.asiento_16,w.asiento_22,w.asiento_28,w.asiento_34,w.asiento_40,w.asiento_46,w.asiento_13,w.asiento_19,w.asiento_25,w.asiento_31,w.asiento_37,w.asiento_43,w.asiento_49]
+    listaEconomica[2] = [w.asiento_11,w.asiento_17,w.asiento_23,w.asiento_29,w.asiento_35,w.asiento_41,w.asiento_47,w.asiento_12,w.asiento_18,w.asiento_24,w.asiento_30,w.asiento_36,w.asiento_42,w.asiento_48]
+
+def datosPasajeros(nombre,dni,asiento):
+    dic = dict()
+    dic["nomnbre"] = nombre
+    dic["dni"] = dni
+    dic["asiento"] = asiento
+    listaPasajeros.append(dic)
+    print(listaPasajeros)
 
 def buscar():
-    print('main_support.buscar')
-    sys.stdout.flush()
+    w.asiento_1.config(background="red")
 
 def eliminar():
     print('main_support.eliminar')
@@ -37,9 +67,63 @@ def porcentaje():
     print('main_support.porcentaje')
     sys.stdout.flush()
 
-def registrar():
-    print('main_support.registrar')
-    sys.stdout.flush()
+def vetanaRegistrar():
+    def registrar():
+        asiento=""
+        nombre=et_nombre.get()
+        dni=int(et_dni.get())
+        clase=cb_clase.get()
+        ubicacion=cb_ubicacion.get()
+        global indEj_ventanilla,indEj_pasillo,indEco_ventanilla,indEco_centro,indEco_pasillo
+        if clase=="ejecutivo":
+            if ubicacion=="ventanilla":
+                listaEjecutiva[0][indEj_ventanilla].config(background="red")
+                asiento=listaEjecutiva[0][indEj_ventanilla].cget("text")
+                indEj_ventanilla+=1
+            elif ubicacion=="pasillo":
+                listaEjecutiva[1][indEj_pasillo].config(background="red")
+                asiento=listaEjecutiva[1][indEj_pasillo].cget("text")
+                indEj_pasillo+=1
+        elif clase=="economico":
+            if ubicacion=="ventanilla":
+                listaEconomica[0][indEco_ventanilla].config(background="red")
+                asiento=listaEconomica[0][indEco_ventanilla].cget("text")
+                indEco_ventanilla+=1
+            elif ubicacion=="centro":
+                listaEconomica[1][indEco_centro].config(background="red")
+                asiento=listaEconomica[1][indEco_centro].cget("text")
+                indEco_centro+=1
+            elif ubicacion=="pasillo":
+                listaEconomica[2][indEco_pasillo].config(background="red")
+                asiento=listaEconomica[2][indEco_pasillo].cget("text")
+                indEco_pasillo+=1
+        datosPasajeros(nombre,dni,asiento)
+        messagebox.showinfo("Mensaje","Se agrego el pasajero con exito")
+        window.destroy()
+    window=Tk()
+    window.title('Tienda')
+    window.resizable(0,0)
+    Label(window, text="Nombre del pasajero:", font=("Arial black", 9)).grid(row=0,column=0)
+    Label(window, text="DNI del pasajero:", font=("Arial black", 9)).grid(row=1,column=0)
+    Label(window, text="Clase:", font=("Arial black", 9)).grid(row=2,column=0)
+    Label(window, text="Ubicacion:", font=("Arial black", 9)).grid(row=3,column=0)
+    et_nombre = Entry(window)
+    et_nombre.grid(row=0,column=1)
+    et_dni = Entry(window)
+    et_dni.grid(row=1,column=1)
+    cb_clase = ttk.Combobox(window,width="17")
+    cb_clase['values'] = ("ejecutivo","economico")
+    cb_clase.set("economico")
+    cb_clase.grid(row=2,column=1)
+    cb_ubicacion = ttk.Combobox(window,width="17")
+    cb_ubicacion['values'] = ("ventanilla","centro","pasillo")
+    cb_ubicacion.set("ventanilla")
+    cb_ubicacion.grid(row=3,column=1)
+    Button(window,text="Aceptar",width="17",command=registrar).grid(row=4,column=1)
+
+    window.mainloop()
+
+
 
 def destroy_window():
     # Function which closes the window.
@@ -50,7 +134,3 @@ def destroy_window():
 if __name__ == '__main__':
     import main
     main.vp_start_gui()
-
-
-
-
