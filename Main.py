@@ -14,7 +14,6 @@ window.geometry('704x437')
 window.resizable(False,False)
 window.title('Reserva de Pasajes')
 window.protocol('WM_DELETE_WINDOW',root.destroy)
-window.configure(bg='black')
 
 #Variables Globales
 Disponibilidad=True
@@ -34,19 +33,26 @@ for i in range(50):
     Cedulas_Pasajeros.append("")
 
 #Funciones
+def mostrar_reserva(x,y):
+    global Nombres_Pasajeros,Cedulas_Pasajeros
+    if x==1:
+        messagebox.showinfo('Asiento Libre','Este asiento aún no ha sido reservado')
+    elif x==2:
+        string='Este asiento ha sido reservado por:\nNombre: {0}\nCédula: {1}'.format(Nombres_Pasajeros[y],Cedulas_Pasajeros[y])
+        messagebox.showinfo('Asiento Reservado',string)       
 def sillas():
     global Buttons,Asiento_Status,Nombres_Pasajeros,Cedulas_Pasajeros          
     for i in range(1,51):
         if i in (1,2,3,4,5,6,7,8) and Asiento_Status[i]==1:
             bg_="yellow"
-        if i in (1,2,3,4,5,6,7,8) and Asiento_Status[i]==0:
-            bg_="red"
-        if i not in (1,2,3,4,5,6,7,8) and Asiento_Status[i]==1:
+        elif i not in (1,2,3,4,5,6,7,8) and Asiento_Status[i]==1:
             bg_="light blue"
-        if i not in (1,2,3,4,5,6,7,8) and Asiento_Status[i]==0:
+        elif Asiento_Status[i]==0:
             bg_="red"
-        btn_silla  = Button(window, text=str(i),width=2,bg=bg_)
+        btn_silla  = Button(window, text=str(i),width=2,bg=bg_,command = lambda i=i:mostrar_reserva(1,i))
         btn_silla.place(x=Buttons[i][0],y=Buttons[i][1])
+        if Asiento_Status[i]==0:
+            btn_silla.configure(command = lambda i=i:mostrar_reserva(2,i))          
 def Limpiar_root_y_toplevel(x):
     global Botonera
     if x==1:
@@ -67,7 +73,6 @@ def Requerimientos():
     #Requerimiento 1
     def Registrar_Pasajero():
         root.deiconify()
-        root.title('Registro de Reserva')
         lbl_Nombre= Label(root, text='Nombre:',bg='black',fg='orange').pack()
         Nombre = StringVar()
         Entry_Nombre = Entry(root, textvariable=Nombre)
@@ -146,7 +151,6 @@ def Requerimientos():
     btn_Registrar = Button(Botonera, text='Registrar pasajero', command=Registrar_Pasajero,width=24,bg='black',fg='orange').pack(side=LEFT)
     def Eliminar_Pasajero():
         root.deiconify()
-        root.title('Eliminación de Reserva')
         lbl_Cedula= Label(root, text='Cédula:',bg='black',fg='orange',font=('Open Sans',11)).pack()
         Cedula_ = IntVar()
         Entry_Cedula = Entry(root, textvariable=Cedula_)
@@ -166,7 +170,6 @@ def Requerimientos():
     btn_Eliminar = Button(Botonera, text='Eliminar pasajero', command = Eliminar_Pasajero, width=24,bg='black',fg='orange').pack(side=LEFT)
     def Buscar_Pasajero():
         root.deiconify()
-        root.title('Busca de Reserva')
         lbl_Cedula= Label(root, text='Cédula:',bg='black',fg='orange',font=('Open Sans',11)).pack()
         Cedula_2 = IntVar()
         Entry_Cedula = Entry(root, textvariable=Cedula_2)
@@ -199,7 +202,7 @@ def Requerimientos():
         messagebox.showinfo('Datos de Ocupacion',string)
     btn_Porcentaje_Ocup = Button(Botonera, text='Porcentaje Ocupacion',width=20,command=Porcentaje_Ocupacion,bg='black',fg='orange').pack(side=LEFT)
 #GUI
-plane = ImageTk.PhotoImage(Image.open(r'C:\Users\Agus\Downloads\planeres.jpg'))
+plane = ImageTk.PhotoImage(Image.open(r'C:\Users\Agus\Downloads\Code\Pasajes Avion\planeres.jpg'))
 panel = Label(window, image = plane)
 panel.place(x=0,y=0)
 panel.image = plane
