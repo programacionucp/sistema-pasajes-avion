@@ -8,7 +8,6 @@
 
 import sys
 from tkinter import *
-from tkinter import ttk
 from tkinter import messagebox
 
 try:
@@ -59,42 +58,53 @@ def datosPasajeros(nombre,dni,asiento,lbl):
 
 def buscar():
     def buscarPasajero():
-        dni = int(et_dni.get())
-        for un_pasajero in listaPasajeros:
-            if un_pasajero["dni"]==dni:
-                nombre = un_pasajero["nombre"]
-                asiento = un_pasajero["asiento"]
-                messagebox.showinfo("Datos del pasajero","Nombre: "+nombre+"\nAsiento: "+asiento)
-                window.destroy()
-    window=Tk()
-    window.title('Buscar Pasajero')
-    window.resizable(0,0)
-    Label(window, text="DNI del pasajero:", font=("Arial black", 9)).grid(row=0,column=0)
-    et_dni = Entry(window)
-    et_dni.grid(row=0,column=1)
-    Button(window,text="Buscar",width="17",command=buscarPasajero).grid(row=1,column=1)
-    window.mainloop()
+        try:
+            dni = int(et_dni.get())
+            for un_pasajero in listaPasajeros:
+                if un_pasajero["dni"]==dni:
+                    nombre = un_pasajero["nombre"]
+                    asiento = un_pasajero["asiento"]
+                    messagebox.showinfo("Datos del pasajero","Nombre: "+nombre+"\nAsiento: "+asiento)
+                    window.destroy()
+        except:
+            messagebox.showerror("Error","Verifique los campos y vuelva a intentarlo")
+    if len(listaPasajeros)==0:
+        messagebox.showinfo("Mensaje","No hay pasajeros registrados")
+    else:
+        window=Tk()
+        window.title('Buscar Pasajero')
+        window.resizable(0,0)
+        Label(window, text="DNI del pasajero:", font=("Arial black", 9)).grid(row=0,column=0)
+        et_dni = Entry(window)
+        et_dni.grid(row=0,column=1)
+        Button(window,text="Buscar",width="17",command=buscarPasajero).grid(row=1,column=1)
+        window.mainloop()
 
 def eliminar():
     def eliminarPasajero():
-        dni = int(et_dni.get())
-        indice = 0
-        for un_pasajero in listaPasajeros:
-            if un_pasajero["dni"]==dni:
-                listaPasajeros.pop(indice)
-                un_pasajero["label"].config(background="#00ff00")
-                messagebox.showinfo("Mensaje","Se ha eliminado el pasajero")
-                window.destroy()
-            indice+=1
-
-    window=Tk()
-    window.title('Eliminar Pasajero')
-    window.resizable(0,0)
-    Label(window, text="DNI del pasajero:", font=("Arial black", 9)).grid(row=0,column=0)
-    et_dni = Entry(window)
-    et_dni.grid(row=0,column=1)
-    Button(window,text="Eliminar",width="17",command=eliminarPasajero).grid(row=1,column=1)
-    window.mainloop()
+        try:
+            dni = int(et_dni.get())
+            indice = 0
+            for un_pasajero in listaPasajeros:
+                if un_pasajero["dni"]==dni:
+                    listaPasajeros.pop(indice)
+                    un_pasajero["label"].config(background="#00ff00")
+                    messagebox.showinfo("Mensaje","Se ha eliminado el pasajero")
+                    window.destroy()
+                indice+=1
+        except:
+            messagebox.showerror("Error","Verifique los campos y vuelva a intentarlo")
+    if len(listaPasajeros)==0:
+        messagebox.showinfo("Mensaje","No hay pasajeros registrados")
+    else:
+        window=Tk()
+        window.title('Eliminar Pasajero')
+        window.resizable(0,0)
+        Label(window, text="DNI del pasajero:", font=("Arial black", 9)).grid(row=0,column=0)
+        et_dni = Entry(window)
+        et_dni.grid(row=0,column=1)
+        Button(window,text="Eliminar",width="17",command=eliminarPasajero).grid(row=1,column=1)
+        window.mainloop()
 
 def porcentaje():
     porcentaje = str((len(listaPasajeros)*100)/50)
@@ -102,61 +112,74 @@ def porcentaje():
 
 def vetanaRegistrar():
     def registrar():
-        nombre=et_nombre.get()
-        dni=int(et_dni.get())
-        clase=cb_clase.get()
-        ubicacion=cb_ubicacion.get()
-        global indEj_ventanilla,indEj_pasillo,indEco_ventanilla,indEco_centro,indEco_pasillo
-        if clase=="ejecutivo":
-            if ubicacion=="ventanilla":
-                listaEjecutiva[0][indEj_ventanilla].config(background="red")
-                lbl = listaEjecutiva[0][indEj_ventanilla]
-                asiento=listaEjecutiva[0][indEj_ventanilla].cget("text")
-                indEj_ventanilla+=1
-            elif ubicacion=="pasillo":
-                listaEjecutiva[1][indEj_pasillo].config(background="red")
-                lbl = listaEjecutiva[1][indEj_pasillo]
-                asiento=listaEjecutiva[1][indEj_pasillo].cget("text")
-                indEj_pasillo+=1
-        elif clase=="economico":
-            if ubicacion=="ventanilla":
-                listaEconomica[0][indEco_ventanilla].config(background="red")
-                lbl = listaEconomica[0][indEco_ventanilla]
-                asiento=listaEconomica[0][indEco_ventanilla].cget("text")
-                indEco_ventanilla+=1
-            elif ubicacion=="centro":
-                listaEconomica[1][indEco_centro].config(background="red")
-                lbl = listaEconomica[1][indEco_centro]
-                asiento=listaEconomica[1][indEco_centro].cget("text")
-                indEco_centro+=1
-            elif ubicacion=="pasillo":
-                listaEconomica[2][indEco_pasillo].config(background="red")
-                lbl = listaEconomica[2][indEco_pasillo]
-                asiento=listaEconomica[2][indEco_pasillo].cget("text")
-                indEco_pasillo+=1
-        datosPasajeros(nombre,dni,asiento,lbl)
-        messagebox.showinfo("Mensaje","Se agrego el pasajero con exito")
-        window.destroy()
+        try:
+            nombre=et_nombre.get()
+            dni=int(et_dni.get())
+            clase=selec.get()
+            ubicacion=cb_ubicacion.get()
+            global indEj_ventanilla,indEj_pasillo,indEco_ventanilla,indEco_centro,indEco_pasillo
+            if clase=="ejecutivo":
+                if ubicacion=="ventanilla":
+                    listaEjecutiva[0][indEj_ventanilla].config(background="red")
+                    lbl = listaEjecutiva[0][indEj_ventanilla]
+                    asiento=listaEjecutiva[0][indEj_ventanilla].cget("text")
+                    indEj_ventanilla+=1
+                elif ubicacion=="pasillo":
+                    listaEjecutiva[1][indEj_pasillo].config(background="red")
+                    lbl = listaEjecutiva[1][indEj_pasillo]
+                    asiento=listaEjecutiva[1][indEj_pasillo].cget("text")
+                    indEj_pasillo+=1
+            elif clase=="economico":
+                if ubicacion=="ventanilla":
+                    listaEconomica[0][indEco_ventanilla].config(background="red")
+                    lbl = listaEconomica[0][indEco_ventanilla]
+                    asiento=listaEconomica[0][indEco_ventanilla].cget("text")
+                    indEco_ventanilla+=1
+                elif ubicacion=="centro":
+                    listaEconomica[1][indEco_centro].config(background="red")
+                    lbl = listaEconomica[1][indEco_centro]
+                    asiento=listaEconomica[1][indEco_centro].cget("text")
+                    indEco_centro+=1
+                elif ubicacion=="pasillo":
+                    listaEconomica[2][indEco_pasillo].config(background="red")
+                    lbl = listaEconomica[2][indEco_pasillo]
+                    asiento=listaEconomica[2][indEco_pasillo].cget("text")
+                    indEco_pasillo+=1
+            datosPasajeros(nombre,dni,asiento,lbl)
+            messagebox.showinfo("Mensaje","Se agrego el pasajero con exito")
+            window.destroy()
+        except:
+            messagebox.showerror("Error","Verifique los campos y vuelva a intentarlo")
     window=Tk()
     window.title('Nuevo Pasajero')
     window.resizable(0,0)
-    Label(window, text="Nombre del pasajero:", font=("Arial black", 9)).grid(row=0,column=0)
+    Label(window, text="Nombre del pasajero:", font=("Arial black", 9),justify='left').grid(row=0,column=0)
     Label(window, text="DNI del pasajero:", font=("Arial black", 9)).grid(row=1,column=0)
-    Label(window, text="Clase:", font=("Arial black", 9)).grid(row=2,column=0)
+    Label(window, text="Clase:", font=("Arial black", 9),justify='left').grid(row=2,column=0)
     Label(window, text="Ubicacion:", font=("Arial black", 9)).grid(row=3,column=0)
-    et_nombre = Entry(window)
+    et_nombre = Entry(window,width="25")
     et_nombre.grid(row=0,column=1)
-    et_dni = Entry(window)
+    et_dni = Entry(window,width="25")
     et_dni.grid(row=1,column=1)
-    cb_clase = ttk.Combobox(window,width="17")
-    cb_clase['values'] = ("ejecutivo","economico")
-    cb_clase.set("economico")
-    cb_clase.grid(row=2,column=1)
-    cb_ubicacion = ttk.Combobox(window,width="17")
-    cb_ubicacion['values'] = ("ventanilla","centro","pasillo")
-    cb_ubicacion.set("ventanilla")
+    def clase():
+        s = selec.get()
+        if s == "ejecutivo":
+            cb_ubicacion['values'] = ("ventanilla","pasillo")
+        else:
+            cb_ubicacion['values'] = ("ventanilla","centro","pasillo")
+        cb_ubicacion.set("ventanilla")
+    def ejecutivo():
+        selec.set("ejecutivo")
+        clase()
+    def economico():
+        selec.set("economico")
+        clase()
+    selec = StringVar()
+    Radiobutton(window,text="Ejecutivo",value=1,variable=selec,command=ejecutivo).place(x=142,y=45)
+    Radiobutton(window,text="Economico",value=2,variable=selec,command=economico).place(x=220,y=45)
+    cb_ubicacion = ttk.Combobox(window,width="22")
     cb_ubicacion.grid(row=3,column=1)
-    Button(window,text="Aceptar",width="17",command=registrar).grid(row=4,column=1)
+    Button(window,text="Aceptar",width="22",command=registrar).grid(row=4,column=1)
 
     window.mainloop()
 
