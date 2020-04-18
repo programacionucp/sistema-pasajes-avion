@@ -38,6 +38,11 @@ def porcentaje_ocupacion():
     sys.stdout.flush()
 
 def registrar_pasajeros():
+    global listaEJECUTIVA
+    global listaECONOMICA
+    listaEJECUTIVA=[[w.asiento1,w.asiento5,w.asiento4,w.asiento8],[w.asiento2,w.asiento6,w.asiento3,w.asiento7]]
+    listaECONOMICA=[[]]
+    print(listaEJECUTIVA)
     print('avionproyecto_support.registrar_pasajeros')
     sys.stdout.flush()
 
@@ -50,6 +55,7 @@ def destroy_window():
 if __name__ == '__main__':
     import avionproyecto
     avionproyecto.vp_start_gui()
+
 
 
 
