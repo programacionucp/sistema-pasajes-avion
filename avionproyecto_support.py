@@ -22,7 +22,7 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 def init(top, gui, *args, **kwargs):
-    global w, top_level, root,lista_ejecutiva,lista_economica
+    global w, top_level, root,lista_ejecutiva,lista_economica,asiento,dicdatosPasajeros, colorlbl,pasajeros
     w = gui
     top_level = top
     root = top
@@ -53,31 +53,55 @@ def buscar_pasajero():
 def eliminar_pasajero():
     print('avionproyecto_support.eliminar_pasajero')
     sys.stdout.flush()
-def datos_pasajero(nombre,cedula,clase,ubicacion):
+def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
     global dicDatospasajeros,todos
     dicDatospasajeros=dict()
     dicDatospasajeros["nombre:"]=nombre
     dicDatospasajeros["cedula:"] = cedula
     dicDatospasajeros["clase :"] = clase
     dicDatospasajeros["ubicacion:"] = ubicacion
-
+    dicDatospasajeros["colorlbl :"] =colorlbl
+    return dicDatospasajeros
 def porcentaje_ocupacion():
-    print('avionproyecto_support.porcentaje_ocupacion')
+    global todospasajeros
+    todospasajeros=list()
+    todospasajeros.append(pasajeros)
+    for pasajero in todospasajeros:
+        print(pasajero)
+    print(len(todospasajeros))
+
     sys.stdout.flush()
-    print(len(lista_ejecutiva))
+
 
 def registrar_pasajeros():
-    nombre=nombre_pasajero.get()
-    cedula=cedulapasajero.get()
-    clase=clasesvuelos.get()
-    global asiento,dicdatosPasajeros
-    asiento=0
+
+    global asiento,dicdatosPasajeros, colorlbl,pasajeros
+    asientov=0
+    asientop=0
+    asientoc=0
+
     if clasesvuelos.get()== "ejecutiva"and ubicacionP.get()=="ventana" :
-            ventana=lista_ejecutiva[0]
-            indice=0
-            for asiento in range(len(ventana)):
-                ventana[indice].config(background="#ff0000")
-                indice += 1
+        lista_ejecutiva[0][asientov].config(background="red")
+        colorlbl = lista_ejecutiva[0][asientov]
+        asientov+= 1
+    if clasesvuelos.get()=="ejecutiva"and ubicacionP.get()=="pasillo":
+        lista_ejecutiva[1][asientop].config(background="red")
+        colorlbl = lista_ejecutiva[1][asientop]
+        asientop += 1
+    #claseECONOMICA
+    if clasesvuelos.get() == "economica" and ubicacionP.get() == "ventana":
+        lista_economica[0][asientov].config(background="red")
+        colorlbl = lista_economica[0][asientov]
+        asientov += 1
+    if clasesvuelos.get() == "economica" and ubicacionP.get() == "centro":
+        lista_economica[1][asientov].config(background="red")
+        colorlbl = lista_economica[1][asientov]
+        asientoc += 1
+    if clasesvuelos.get() == "economica" and ubicacionP.get() == "pasillo":
+        lista_economica[2][asientov].config(background="red")
+        colorlbl = lista_economica[2][asientov]
+        asientov += 1
+    pasajeros=datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
 
 
     sys.stdout.flush()
