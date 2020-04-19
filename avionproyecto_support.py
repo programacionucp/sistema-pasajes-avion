@@ -20,10 +20,14 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 def init(top, gui, *args, **kwargs):
-    global w, top_level, root
+    global w, top_level, root,lista_ejecutiva,lista_economica
     w = gui
     top_level = top
     root = top
+    lista_ejecutiva=[[w.asiento1,w.asiento5,w.asiento4,w.asiento8]
+        ,[w.asiento2,w.asiento6,w.asiento3,w.asiento7]]
+    lista_economica=[[w.asiento9,w.asiento15,w.asiento14,w.asiento20],
+                     [w.asiento10,w.asiento16,w.asiento13,w.asiento19,],[w.asiento11,w.asiento17,w.asiento12,w.asiento18]]
 
 
 def set_Tk_var():
@@ -41,8 +45,7 @@ def set_Tk_var():
     centroU = tk.IntVar()
     global pasilloU
     pasilloU = tk.IntVar()
-    global lista_ejecutiva
-    global lista_economica
+
 
 
 
@@ -61,7 +64,11 @@ def porcentaje_ocupacion():
     print(len(lista_ejecutiva))
 
 def registrar_pasajeros():
-
+    ventana=lista_ejecutiva[0]
+    print(len(ventana))
+    for ubicacion in ventana:
+        print(ubicacion)
+        ventana[ubicacion].configure(background="red")
 
     print(len(lista_ejecutiva))
     sys.stdout.flush()
