@@ -6,7 +6,6 @@
 #    Apr 18, 2020 08:12:38 PM -03  platform: Windows NT
 #    Apr 18, 2020 11:38:17 PM -03  platform: Windows NT
 #    Apr 19, 2020 03:51:05 PM -03  platform: Windows NT
-#    Apr 19, 2020 03:57:14 PM -03  platform: Windows NT
 
 import sys
 
@@ -31,10 +30,6 @@ def init(top, gui, *args, **kwargs):
                      [w.asiento10,w.asiento16,w.asiento13,w.asiento19,],[w.asiento11,w.asiento17,w.asiento12,w.asiento18]]
 
 def set_Tk_var():
-    global clasesP
-    clasesP = tk.StringVar()
-    global ubicacionP
-    ubicacionP = tk.StringVar()
     global ubicacion_p
     ubicacion_p = tk.StringVar()
     global cedulapasajero
@@ -45,6 +40,12 @@ def set_Tk_var():
     ventanaU = tk.IntVar()
     global clasesvuelos
     clasesvuelos = tk.StringVar()
+    global selectedButton
+    selectedButton = tk.IntVar()
+    global centroU
+    centroU = tk.IntVar()
+    global pasilloU
+    pasilloU = tk.IntVar()
 
 def buscar_pasajero():
     print('avionproyecto_support.buscar_pasajero')
@@ -70,15 +71,15 @@ def registrar_pasajeros():
     nombre=nombre_pasajero.get()
     cedula=cedulapasajero.get()
     clase=clasesvuelos.get()
+    ubicacion=ventanaU.get()
     global asiento,dicdatosPasajeros
     asiento=0
-    if clasesvuelos.get()== "ejecutiva"and ubicacionP.get()=="ventana" :
+    if ventanaU.get() == 1:
             ventana=lista_ejecutiva[0]
-            indice=0
             for asiento in range(len(ventana)):
-                ventana[indice].config(background="#ff0000")
-                indice += 1
-
+                ventana[asiento].config(background="#ff0000")
+                asiento+=1
+                print(asiento)
 
     sys.stdout.flush()
 
