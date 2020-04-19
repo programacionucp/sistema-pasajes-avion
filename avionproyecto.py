@@ -70,7 +70,7 @@ class Toplevel1:
         top.minsize(148, 1)
         top.maxsize(1924, 1055)
         top.resizable(1, 1)
-        top.title("New Toplevel")
+        top.title("SISTEMA DE RESERVAS DE PASAJES")
         top.configure(background="#008040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
@@ -369,7 +369,7 @@ class Toplevel1:
         self.clases_vuelo = ttk.Combobox(self.Frame1)
         self.clases_vuelo.place(relx=0.118, rely=0.595, relheight=0.067
                 , relwidth=0.584)
-        self.value_list = ['[ejecutiva][economica]',]
+        self.value_list = [['ejecutiva'],['economica']]
         self.clases_vuelo.configure(values=self.value_list)
         self.clases_vuelo.configure(textvariable=avionproyecto_support.clasesvuelos)
         self.clases_vuelo.configure(takefocus="")
