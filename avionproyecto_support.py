@@ -9,6 +9,7 @@
 #    Apr 19, 2020 03:57:14 PM -03  platform: Windows NT
 
 import sys
+from tkinter import messagebox
 
 try:
     import Tkinter as tk
@@ -54,8 +55,23 @@ def set_Tk_var():
     clasesvuelos = tk.StringVar()
 
 def buscar_pasajero():
-    print('avionproyecto_support.buscar_pasajero')
-    sys.stdout.flush()
+    def buscar():
+      for pasajero in listapasajeros:
+          if pasajero["cedula"]==cedulaing.get():
+              messagebox.showinfo("pasajeros"," Los datos del pasajero son los siguientes:""\nnombre:"+ pasajero["nombre"]+"\nClase : "+pasajero["clase"]+"\nUbicacion :"+pasajero["ubicacion"])
+
+
+    window = tk.Tk()
+    window.title("Buscar pasajero")
+    window.geometry("200x100")
+    window.resizable(0,0)
+    btnCambiar = tk.Button(window, width="14", height="1", text="Aceptar", command=buscar)
+    btnCambiar.place(x=20, y=70)
+    cedulaing = tk.Entry(window)
+    cedulaing.configure(width="11")
+    cedulaing.place(x=40, y=30)
+    tk.Label(window, text="cedula: ", font=("Arial black  ", 10), fg="white", relief="groove", bg="black").place(x=10, y=5)
+
 
 def eliminar_pasajero():
     print('avionproyecto_support.eliminar_pasajero')
@@ -63,16 +79,16 @@ def eliminar_pasajero():
 def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
     global dicDatospasajeros,todos
     dicDatospasajeros=dict()
-    dicDatospasajeros["nombre:"]=nombre
-    dicDatospasajeros["cedula:"] = cedula
-    dicDatospasajeros["clase :"] = clase
-    dicDatospasajeros["ubicacion:"] = ubicacion
-    dicDatospasajeros["colorlbl :"] =colorlbl
+    dicDatospasajeros["nombre"]=nombre
+    dicDatospasajeros["cedula"] = cedula
+    dicDatospasajeros["clase"] = clase
+    dicDatospasajeros["ubicacion"] = ubicacion
+    dicDatospasajeros["colorlbl "] =colorlbl
     listapasajeros.append(dicDatospasajeros)
 
 def porcentaje_ocupacion():
-    porcentajeOcupacion=(len(listapasajeros)*100/20)
-
+    porcentajeOcupacion=str(len(listapasajeros)*100/20)
+    messagebox.showinfo("Porcentaje ocupacion", "el porcentaje de ocupacion es de:"+porcentajeOcupacion)
 
     sys.stdout.flush()
 
@@ -84,7 +100,7 @@ def registrar_pasajeros():
         lista_ejecutiva[0][asiento_v_EJ].config(background="red")
         colorlbl = lista_ejecutiva[0][asiento_v_EJ]
         asiento_v_EJ+= 1
-        print(asiento_v_EJ)
+
     if clasesvuelos.get()=="ejecutiva"and ubicacionP.get()=="pasillo":
         lista_ejecutiva[1][asiento_p_EJ].config(background="red")
         colorlbl = lista_ejecutiva[1][asiento_p_EJ]
