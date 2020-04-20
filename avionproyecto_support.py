@@ -37,6 +37,8 @@ def init(top, gui, *args, **kwargs):
     asiento_v_E=0
     asiento_c_E = 0
     asiento_p_E=0
+    #--------------------indiceborrarpasajero
+    borrarind=0
     listapasajeros=list()
 def set_Tk_var():
     global clasesP
@@ -74,6 +76,31 @@ def buscar_pasajero():
 
 
 def eliminar_pasajero():
+    def eliminarP():
+      global borrarind
+      borrarind=0
+      for pasajero in listapasajeros:
+          if pasajero["cedula"]==cedulaing.get():
+              [listapasajeros].pop(borrarind)
+              borrarind+=1
+              messagebox.showinfo("eliminar pasajero"," pasajero Eliminado correctamente")
+          else:
+              messagebox.showerror("eliminar pasajero", " no se encuentra el pasajero")
+
+
+
+
+    window = tk.Tk()
+    window.title("Eliminar Pasajero")
+    window.geometry("200x100")
+    window.resizable(0,0)
+    btnCambiar = tk.Button(window, width="14", height="1", text="ELIMINAR", command=eliminarP)
+    btnCambiar.place(x=20, y=70)
+    cedulaing = tk.Entry(window)
+    cedulaing.configure(width="11")
+    cedulaing.place(x=40, y=30)
+    tk.Label(window, text="cedula: ", font=("Arial black  ", 10), fg="white", relief="groove", ).place(x=10, y=5)
+
     print('avionproyecto_support.eliminar_pasajero')
     sys.stdout.flush()
 def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
