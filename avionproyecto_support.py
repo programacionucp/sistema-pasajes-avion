@@ -15,6 +15,8 @@ try:
 except ImportError:
     import tkinter as tk
 
+
+
 try:
     import ttk
     py3 = False
@@ -22,14 +24,19 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 def init(top, gui, *args, **kwargs):
-    global w, top_level, root,lista_ejecutiva,lista_economica,asiento,dicdatosPasajeros, colorlbl,pasajeros
+    global w, top_level, root,lista_ejecutiva,lista_economica,asiento,listapasajeros, colorlbl,pasajeros,asiento_v_EJ,asiento_p_EJ,asiento_c_E,colorlbl,asiento_v_E,asiento_p_E
     w = gui
     top_level = top
     root = top
     lista_ejecutiva=[[w.asiento1,w.asiento5,w.asiento4,w.asiento8],[w.asiento2,w.asiento6,w.asiento3,w.asiento7]]
-    lista_economica=[[w.asiento9,w.asiento15,w.asiento14,w.asiento20],
-                     [w.asiento10,w.asiento16,w.asiento13,w.asiento19,],[w.asiento11,w.asiento17,w.asiento12,w.asiento18]]
-
+    lista_economica=[[w.asiento9,w.asiento15,w.asiento14,w.asiento20],[w.asiento10,w.asiento16,w.asiento13,w.asiento19,],[w.asiento11,w.asiento17,w.asiento12,w.asiento18]]
+    asiento_v_EJ=0
+    asiento_p_EJ = 0
+    #-------Indices clase Economico
+    asiento_v_E=0
+    asiento_c_E = 0
+    asiento_p_E=0
+    listapasajeros=list()
 def set_Tk_var():
     global clasesP
     clasesP = tk.StringVar()
@@ -61,47 +68,41 @@ def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
     dicDatospasajeros["clase :"] = clase
     dicDatospasajeros["ubicacion:"] = ubicacion
     dicDatospasajeros["colorlbl :"] =colorlbl
-    return dicDatospasajeros
+    listapasajeros.append(dicDatospasajeros)
+
 def porcentaje_ocupacion():
-    global todospasajeros
-    todospasajeros=list()
-    todospasajeros.append(pasajeros)
-    for pasajero in todospasajeros:
-        print(pasajero)
-    print(len(todospasajeros))
+    porcentajeOcupacion=(len(listapasajeros)*100/20)
+
 
     sys.stdout.flush()
 
-
+asiento_v_EJ=0
 def registrar_pasajeros():
-
-    global asiento,dicdatosPasajeros, colorlbl,pasajeros
-    asientov=0
-    asientop=0
-    asientoc=0
+    global asiento, colorlbl,pasajeros, asiento_v_EJ,asiento_p_EJ,asiento_c_E,colorlbl, asiento_v_E, asiento_p_E
 
     if clasesvuelos.get()== "ejecutiva"and ubicacionP.get()=="ventana" :
-        lista_ejecutiva[0][asientov].config(background="red")
-        colorlbl = lista_ejecutiva[0][asientov]
-        asientov+= 1
+        lista_ejecutiva[0][asiento_v_EJ].config(background="red")
+        colorlbl = lista_ejecutiva[0][asiento_v_EJ]
+        asiento_v_EJ+= 1
+        print(asiento_v_EJ)
     if clasesvuelos.get()=="ejecutiva"and ubicacionP.get()=="pasillo":
-        lista_ejecutiva[1][asientop].config(background="red")
-        colorlbl = lista_ejecutiva[1][asientop]
-        asientop += 1
+        lista_ejecutiva[1][asiento_p_EJ].config(background="red")
+        colorlbl = lista_ejecutiva[1][asiento_p_EJ]
+        asiento_p_EJ += 1
     #claseECONOMICA
     if clasesvuelos.get() == "economica" and ubicacionP.get() == "ventana":
-        lista_economica[0][asientov].config(background="red")
-        colorlbl = lista_economica[0][asientov]
-        asientov += 1
+        lista_economica[0][asiento_v_E].config(background="red")
+        colorlbl = lista_economica[0][asiento_v_E]
+        asiento_v_E += 1
     if clasesvuelos.get() == "economica" and ubicacionP.get() == "centro":
-        lista_economica[1][asientov].config(background="red")
-        colorlbl = lista_economica[1][asientov]
-        asientoc += 1
+        lista_economica[1][asiento_c_E].config(background="red")
+        colorlbl = lista_economica[1][asiento_c_E]
+        asiento_c_E += 1
     if clasesvuelos.get() == "economica" and ubicacionP.get() == "pasillo":
-        lista_economica[2][asientov].config(background="red")
-        colorlbl = lista_economica[2][asientov]
-        asientov += 1
-    pasajeros=datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
+        lista_economica[2][asiento_p_E].config(background="red")
+        colorlbl = lista_economica[2][asiento_p_EJ]
+        asiento_p_E += 1
+    datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
 
 
     sys.stdout.flush()
