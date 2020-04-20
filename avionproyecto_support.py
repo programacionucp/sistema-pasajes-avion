@@ -115,7 +115,7 @@ def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
 
 def porcentaje_ocupacion():
     porcentajeOcupacion=str(len(listapasajeros)*100/20)
-    messagebox.showinfo("Porcentaje ocupacion", "el porcentaje de ocupacion es de:"+porcentajeOcupacion)
+    messagebox.showinfo("Porcentaje ocupación", "el porcentaje de ocupación es de:"+porcentajeOcupacion)
 
     sys.stdout.flush()
 
