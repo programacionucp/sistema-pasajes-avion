@@ -81,7 +81,8 @@ def eliminar_pasajero():
       borrarind=0
       for pasajero in listapasajeros:
           if pasajero["cedula"]==cedulaing.get():
-              [listapasajeros].pop(borrarind)
+              listapasajeros.pop(borrarind)
+              pasajero["colorlbl"].config(background="#472ce0")
               borrarind+=1
               messagebox.showinfo("eliminar pasajero"," pasajero Eliminado correctamente")
           else:
@@ -110,7 +111,7 @@ def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
     dicDatospasajeros["cedula"] = cedula
     dicDatospasajeros["clase"] = clase
     dicDatospasajeros["ubicacion"] = ubicacion
-    dicDatospasajeros["colorlbl "] =colorlbl
+    dicDatospasajeros["colorlbl"] =colorlbl
     listapasajeros.append(dicDatospasajeros)
 
 def porcentaje_ocupacion():
