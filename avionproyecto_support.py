@@ -82,11 +82,21 @@ def eliminar_pasajero():
       for pasajero in listapasajeros:
           if pasajero["cedula"]==cedulaing.get():
               listapasajeros.pop(borrarind)
-              pasajero["colorlbl"].config(background="#472ce0")
+              messagebox.showinfo("eliminar pasajero", " pasajero Eliminado correctamente")
               borrarind+=1
-              messagebox.showinfo("eliminar pasajero"," pasajero Eliminado correctamente")
+              if pasajero["clase"]=="ejecutiva":
+                  pasajero["colorlbl"].config(background="#efe136")
+
+              if pasajero["clase"]=="economica":
+                pasajero["colorlbl"].config(background="#472ce0")
+
           else:
-              messagebox.showerror("eliminar pasajero", " no se encuentra el pasajero")
+            messagebox.showerror("eliminar pasajero", " no se encuentra el pasajero")
+
+
+
+
+
 
 
 
@@ -123,7 +133,11 @@ def porcentaje_ocupacion():
 asiento_v_EJ=0
 def registrar_pasajeros():
     global asiento, colorlbl,pasajeros, asiento_v_EJ,asiento_p_EJ,asiento_c_E,colorlbl, asiento_v_E, asiento_p_E
-
+    for pasajero in listapasajeros:
+        if pasajero["cedula"]!=cedulapasajero.get():
+            datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
+        else:
+            messagebox.showerror(["error"], ["puede haber un pasajero con el mismo dni"])
     if clasesvuelos.get()== "ejecutiva"and ubicacionP.get()=="ventana" :
         lista_ejecutiva[0][asiento_v_EJ].config(background="red")
         colorlbl = lista_ejecutiva[0][asiento_v_EJ]
@@ -146,8 +160,11 @@ def registrar_pasajeros():
         lista_economica[2][asiento_p_E].config(background="red")
         colorlbl = lista_economica[2][asiento_p_EJ]
         asiento_p_E += 1
-    datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
-
+    for pasajero in listapasajeros:
+        if pasajero["cedula"]!=cedulapasajero.get():
+            datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
+        else:
+            messagebox.showerror(["error"], ["puede haber un pasajero con el mismo dni"])
 
     sys.stdout.flush()
 
