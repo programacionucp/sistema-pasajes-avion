@@ -160,11 +160,7 @@ def registrar_pasajeros():
         lista_economica[2][asiento_p_E].config(background="red")
         colorlbl = lista_economica[2][asiento_p_EJ]
         asiento_p_E += 1
-    for pasajero in listapasajeros:
-        if pasajero["cedula"]!=cedulapasajero.get():
-            datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
-        else:
-            messagebox.showerror(["error"], ["puede haber un pasajero con el mismo dni"])
+
 
     sys.stdout.flush()
 
