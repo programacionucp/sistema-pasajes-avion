@@ -93,14 +93,6 @@ def eliminar_pasajero():
           else:
             messagebox.showerror("eliminar pasajero", " no se encuentra el pasajero")
 
-
-
-
-
-
-
-
-
     window = tk.Tk()
     window.title("Eliminar Pasajero")
     window.geometry("200x100")
@@ -112,8 +104,8 @@ def eliminar_pasajero():
     cedulaing.place(x=40, y=30)
     tk.Label(window, text="cedula: ", font=("Arial black  ", 10), fg="white", relief="groove", ).place(x=10, y=5)
 
-    print('avionproyecto_support.eliminar_pasajero')
     sys.stdout.flush()
+
 def datos_pasajero(nombre,cedula,clase,ubicacion,colorlbl):
     global dicDatospasajeros,todos
     dicDatospasajeros=dict()
@@ -132,12 +124,9 @@ def porcentaje_ocupacion():
 
 asiento_v_EJ=0
 def registrar_pasajeros():
-    global asiento, colorlbl,pasajeros, asiento_v_EJ,asiento_p_EJ,asiento_c_E,colorlbl, asiento_v_E, asiento_p_E
-    for pasajero in listapasajeros:
-        if pasajero["cedula"]!=cedulapasajero.get():
-            datos_pasajero(nombre_pasajero.get(),cedulapasajero.get(),clasesvuelos.get(),ubicacionP.get(),colorlbl)
-        else:
-            messagebox.showerror(["error"], ["puede haber un pasajero con el mismo dni"])
+    global asiento,pasajeros, asiento_v_EJ,asiento_p_EJ,asiento_c_E,colorlbl, asiento_v_E, asiento_p_E,pasajeroE
+    pasajeroE=0
+
     if clasesvuelos.get()== "ejecutiva"and ubicacionP.get()=="ventana" :
         lista_ejecutiva[0][asiento_v_EJ].config(background="red")
         colorlbl = lista_ejecutiva[0][asiento_v_EJ]
@@ -160,7 +149,7 @@ def registrar_pasajeros():
         lista_economica[2][asiento_p_E].config(background="red")
         colorlbl = lista_economica[2][asiento_p_EJ]
         asiento_p_E += 1
-
+    datos_pasajero(nombre_pasajero.get(), cedulapasajero.get(), clasesvuelos.get(), ubicacionP.get(), colorlbl)
 
     sys.stdout.flush()
 
